@@ -1,24 +1,23 @@
 import re
+import sys
 
 object_mentions = []
 
-def unique(list1): 
-    # intilize a null list 
-    unique_list = [] 
-    # traverse for all elements 
-    for x in list1: 
-        # check if exists in unique_list or not 
-        if x not in unique_list: 
+
+def unique(list1):
+    # intilize a null list
+    unique_list = []
+    # traverse for all elements
+    for x in list1:
+        # check if exists in unique_list or not
+        if x not in unique_list:
             unique_list.append(x)
     return unique_list
 
 
+path = sys.argv[1]
 
-path  = '/Users/antonmerkulov/Documents/Demo/Model/model.txt'
-path2  = '/Users/antonmerkulov/Documents/Demo/Model/report.txt'
-
-model_file = open(path,'r')
-report_file = open(path2,'w+')
+model_file = open(path, 'r')
 
 model = []
 intro = []
@@ -39,8 +38,6 @@ for line in source:
         intro.append(line)
 
 
-
-
 for x in model:
     result = re.findall(r'[a-zA-Zа-яА-Я]+_[a-zA-Zа-яА-Я]+', x)
 #    result = re.findall(r'\S*_\S*', x)
@@ -55,8 +52,6 @@ objects.sort()
 d = dict.fromkeys(objects, "Not Defined")
 
 
-
-
 for x in model:
     for item in d:
         if x.find(item+" {") != -1:
@@ -69,14 +64,13 @@ for item in d:
     leftBrackets = 0
     rightBrackets = 0
 
-
     for x in model:
         if SearchForDef == True:
             if (leftBrackets == rightBrackets):
                 if x.find("}") != -1:
                     SearchForDef = False
                 else:
-                    if x!= '\n':
+                    if x != '\n':
                         typeDef.append(x)
 
             if x.find("{") != -1:
@@ -90,9 +84,8 @@ for item in d:
 
     allTypes = []
     if (len(typeDef) > 0):
-        report_file.write(item)  
-        report_file.write('\n')  
-        for string in typeDef: 
+        print(item)
+        for string in typeDef:
             result = re.findall(r'[a-zA-Zа-яА-Я]+_[a-zA-Zа-яА-Я]+', string)
             if len(result) > 0:
                 for item in result:
@@ -100,15 +93,14 @@ for item in d:
         uniqueTypes = unique(allTypes)
         uniqueTypes.sort()
         if len(uniqueTypes) > 0:
-                for item in uniqueTypes:
-                    if d[item] == "Defined":
-                        report_file.write('\t' + '+ ' + str(item) + '\n')
-                    if d[item] == "Not Defined":
-                        report_file.write('\t' + '- ' + str(item) + '\n')
+              for item in uniqueTypes:
+                  if d[item] == "Defined":
+                      print('\t' + '+ ' + str(item))
+                  if d[item] == "Not Defined":
+                      print('\t' + '- ' + str(item))
 
 
-        report_file.write('\n')  
-
+print('\n')
 
 
 types_all = []
@@ -117,25 +109,22 @@ for item, val in d.items():
     types_all.append(type)
 types = unique(types_all)
 
-report_file.write('Used types:\n')
+print('Used types:')
 for item in types:
-    report_file.write('\t' + str(item) +  " " + '\n')
-report_file.write('\n')
+    print('\t' + str(item))
+
+print('\n')
 
 
-
-report_file.write('Defined objectes:\n')
+print('Defined objectes:')
 
 for item, val in d.items():
     if val == "Defined":
-        report_file.write('\t' + str(item) +  " " + '\n')
-report_file.write('\n')
+        print('\t' + str(item))
+print('\n')
 
-report_file.write('Undefined objectes:\n')
+print('Undefined objectes:')
 
 for item, val in d.items():
     if val == "Not Defined":
-        report_file.write('\t' + str(item) +  " " + '\n')
-
-
-
+        print('\t' + str(item))

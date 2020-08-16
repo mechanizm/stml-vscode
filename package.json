@@ -11,16 +11,26 @@
         "Programming Languages"
     ],
     "contributes": {
-        "languages": [{
-            "id": "stml",
-            "aliases": ["stml", "stml"],
-            "extensions": [".stml",".txt"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "stml",
-            "scopeName": "source.stml",
-            "path": "./syntaxes/stml.tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "stml",
+                "aliases": [
+                    "stml",
+                    "stml"
+                ],
+                "extensions": [
+                    ".stml",
+                    ".txt"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "stml",
+                "scopeName": "source.stml",
+                "path": "./syntaxes/stml.tmLanguage.json"
+            }
+        ]
     }
 }
